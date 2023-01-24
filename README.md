@@ -9,4 +9,4 @@ By downloading these resources, you confirm that you agree to the [RESO EULA](ht
 ## [Certification](./certification/)
 Contains models used for RESO Certification.
 
-These items use the MIT license.
+These items use the [MIT license](https://github.com/RESOStandards/schema-registry/blob/main/LICENSE).
