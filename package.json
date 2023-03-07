@@ -1,0 +1,19 @@
+{
+  "name": "@reso/schema-registry",
+  "version": "1.0.0",
+  "description": "Package containing schemas related to RESO Standards and Certification.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RESOStandards/schema-registry.git"
+  },
+  "keywords": [
+    "certification",
+    "schema"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RESOStandards/schema-registry/issues"
+  },
+  "homepage": "https://github.com/RESOStandards/schema-registry#readme"
+}
