@@ -16,9 +16,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "description": {
-            "$ref": "#/definitions/non-empty-string"
-          },
           "serviceRootUri": {
             "$ref": "#/definitions/non-empty-string"
           },
@@ -65,12 +62,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "serviceRootUri",
-          "recipientUoi",
-          "providerUsi",
-          "description"
-        ],
+        "required": ["serviceRootUri", "recipientUoi", "providerUsi"],
         "additionalProperties": false,
         "if": {
           "not": {
