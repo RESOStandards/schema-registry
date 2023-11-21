@@ -10,7 +10,7 @@
     "endorsement": {
       "$ref": "#/definitions/non-empty-string"
     },
-    "config": {
+    "configs": {
       "type": "array",
       "minItems": 1,
       "items": {
@@ -82,7 +82,7 @@
       }
     }
   },
-  "required": ["version", "providerUoi", "endorsement", "config"],
+  "required": ["version", "providerUoi", "endorsement", "configs"],
   "additionalProperties": false,
   "definitions": {
     "non-empty-string": {
