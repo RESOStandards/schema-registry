@@ -1,4 +1,93 @@
 {
-  "description": "RESO Data Dictionary Configuration Schema",
-  "version": "1.7"
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "1.7"
+    },
+    "providerUoi": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "endorsement": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "configs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "serviceRootUri": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "recipientUoi": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "providerUsi": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "token": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "originatingSystemName": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "originatingSystemId": {
+            "$ref": "#/definitions/non-empty-string"
+          },
+          "clientCredentials": {
+            "type": "object",
+            "properties": {
+              "tokenUri": {
+                "$ref": "#/definitions/non-empty-string"
+              },
+              "clientId": {
+                "$ref": "#/definitions/non-empty-string"
+              },
+              "clientSecret": {
+                "$ref": "#/definitions/non-empty-string"
+              },
+              "scope": {
+                "$ref": "#/definitions/non-empty-string"
+              }
+            },
+            "dependencies": {
+              "tokenUri": ["clientId", "clientSecret"],
+              "clientId": ["tokenUri", "clientSecret"],
+              "clientSecret": ["tokenUri", "clientId"],
+              "scope": {
+                "required": ["clientId", "clientSecret", "tokenUri"]
+              }
+            },
+            "required": ["tokenUri", "clientId", "clientSecret"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["serviceRootUri", "recipientUoi", "providerUsi"],
+        "additionalProperties": false,
+        "if": {
+          "not": {
+            "required": ["token"]
+          }
+        },
+        "then": {
+          "required": ["clientCredentials"]
+        },
+        "dependencies": {
+          "token": {
+            "not": {
+              "required": ["clientCredentials"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["version", "providerUoi", "endorsement", "configs"],
+  "additionalProperties": false,
+  "definitions": {
+    "non-empty-string": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
 }

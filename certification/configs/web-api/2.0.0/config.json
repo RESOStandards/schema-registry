@@ -1,0 +1,256 @@
+{
+  "type": "object",
+  "properties": {
+    "endorsement": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "version": {
+      "const": "2.0.0"
+    },
+    "providerUoi": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "providerUsi": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "recipientUoi": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "recipientEmail": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "serviceRootUri": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "token": {
+      "$ref": "#/definitions/non-empty-string"
+    },
+    "clientCredentials": {
+      "type": "object",
+      "properties": {
+        "tokenUri": {
+          "$ref": "#/definitions/non-empty-string"
+        },
+        "clientId": {
+          "$ref": "#/definitions/non-empty-string"
+        },
+        "clientSecret": {
+          "$ref": "#/definitions/non-empty-string"
+        },
+        "scope": {
+          "$ref": "#/definitions/non-empty-string"
+        }
+      },
+      "dependencies": {
+        "tokenUri": ["clientId", "clientSecret"],
+        "clientId": ["tokenUri", "clientSecret"],
+        "clientSecret": ["tokenUri", "clientId"],
+        "scope": {
+          "required": ["clientId", "clientSecret", "tokenUri"]
+        }
+      },
+      "required": ["tokenUri", "clientId", "clientSecret"],
+      "additionalProperties": false
+    },
+    "parameters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["name", "value"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Resource"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Key Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "value"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": ["name", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Integer Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValueLow": {
+                "type": "string",
+                "const": "1"
+              },
+              "defaultValueHigh": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["name", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Decimal Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValueLow": {
+                "type": "string"
+              },
+              "defaultValueHigh": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": ["name", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Single Lookup Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue": {
+                "type": "string"
+              },
+              "defaultNamespace": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Multiple Lookup Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue1": {
+                "type": "string"
+              },
+              "defaultValue2": {
+                "type": "string"
+              },
+              "defaultNamespace": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "value"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Date Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "value"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "const": "Timestamp Field"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "defaultValue": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "value"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "token": {
+      "not": {
+        "required": ["clientCredentials"]
+      }
+    }
+  },
+  "if": {
+    "not": {
+      "required": ["token"]
+    }
+  },
+  "then": {
+    "required": ["clientCredentials"]
+  },
+  "definitions": {
+    "non-empty-string": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "endorsement",
+    "version",
+    "providerUoi",
+    "providerUsi",
+    "recipientUoi",
+    "recipientEmail",
+    "serviceRootUri",
+    "parameters"
+  ],
+  "additionalProperties": false
+}
